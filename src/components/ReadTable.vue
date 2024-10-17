@@ -1,0 +1,80 @@
+<!--
+Copyright 2024 Thomas Conway
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<script setup lang="ts">
+import { Ref } from "vue";
+import { Locus, ReadItem } from "./segment";
+
+defineProps<{}>();
+
+const selected: Ref<string[]> = defineModel<string[]>("selected", { required: true });
+const items: Ref<ReadItem[]> = defineModel<ReadItem[]>("items", { required: true });
+
+const headers = [
+  { title: "Colour", value: "colour", align: "center", maxWidth: "4em" },
+  { title: "Flipped", value: "flipped", align: "center", maxWidth: "4em" },
+  { title: "Length", value: "length", align: "end"}, 
+  { title: "Read ID", value: "readid", align: "center" },
+  { title: "Mapped Locations", value: "mapped", align: "start" },
+];
+
+function formatLocus(locus: Locus): string {
+  return `${locus.chrom}:${locus.start}-${locus.end}`;
+}
+</script>
+
+<template>
+  <v-sheet rounded border>
+    <v-data-table
+      :items="items"
+      :headers="headers as any"
+      density="compact"
+      items-per-page="-1"
+      hide-default-footer
+      show-select
+      v-model="selected"
+      item-value="readid"
+      item-key="readid"
+      fixed-header
+      height="3in"
+    >
+      <template v-slot:item.colour="{ item }">
+        <v-icon icon="mdi-circle" :color="item.colour"></v-icon>
+      </template>
+      <template v-slot:item.flipped="{ item }">
+        <v-checkbox-btn density="compact" v-model="item.flipped"></v-checkbox-btn>
+      </template>
+      <template v-slot:item.mapped="{ item }">
+        <div class="text-left text-caption">
+          <span v-for="(locus, i) in item.mapped">
+            <span v-if="i > 0">, </span>
+            <span class="nowrap">
+              {{ formatLocus(locus) }}
+            </span>
+          </span>
+        </div>
+      </template>
+    </v-data-table>
+  </v-sheet>
+</template>
+
+<style scoped>
+.leftify {
+  width: 100%;
+}
+.nowrap {
+  white-space: nowrap;
+}
+</style>

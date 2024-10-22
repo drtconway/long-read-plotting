@@ -1,13 +1,15 @@
 {
   "name": "axaplotl",
+  "homepage": "https:/drtconway.github.io/long-read-plotting",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "license": "Apache-2.0",
   "scripts": {
     "dev": "vite --port 3000",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview --host"
+    "build": "vue-tsc -b && vite build --base long-read-plotting --assetsDir .",
+    "preview": "vite preview --host",
+    "deploy": "gh-pages -d dist/axaplotl -o publish -b v1.0.0"
   },
   "dependencies": {
     "@gmod/bam": "^2.0.2",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
+    "gh-pages": "^6.2.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.3",
     "vue-tsc": "^2.0.21"

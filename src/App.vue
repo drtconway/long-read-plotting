@@ -63,6 +63,8 @@ const staticOrDynamic = defineModel<string>("staticOrDynamic");
         The camera icon in the top right of the plot opens a new window/tab with the plot as
         an image that you can save or copy for use in documents/presentations.
       </p>
+      <p>Source code and issue tracker at github: <a href="https://github.com/drtconway/long-read-plotting">https://github.com/drtconway/long-read-plotting</a>
+      </p>
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
